@@ -19,6 +19,7 @@ from pokemongo_bot.inventory import Pokemons, Pokemon, Attack
 
 class CatchPokemon(BaseTask):
     SUPPORTED_TASK_API_VERSION = 1
+    last_time = int(round(time.time() * 1000))
 
     def initialize(self):
         self.pokemon = []
