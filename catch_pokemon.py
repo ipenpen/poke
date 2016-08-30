@@ -19,32 +19,20 @@ from pokemongo_bot.inventory import Pokemons, Pokemon, Attack
 
 class CatchPokemon(BaseTask):
     SUPPORTED_TASK_API_VERSION = 1
-    last_time = int(round(time.time() * 1000))
 
     def initialize(self):
         self.pokemon = []
-        last_time = int(round(time.time() * 1000))
 
     def work(self):
-        # make sure we have SOME balls
-        if sum([inventory.items().get(ball.value).count for ball in 
-            [Item.ITEM_POKE_BALL, Item.ITEM_GREAT_BALL, Item.ITEM_ULTRA_BALL]]) <= 0:
-            return WorkerResult.ERROR
-        
-        current_time = int(round(time.time() * 1000))
-        # check if we have already loaded a list
-        if (current_time - last_time) >= 10000:
-            # load available pokemon by config settings
-            if self.config.get('catch_visible_pokemon', True):
-                self.get_visible_pokemon()
-            if self.config.get('catch_lured_pokemon', True):
-                self.get_lured_pokemon()
+        self.get_visible_pokemon()
+        self.get_lured_pokemon()
 
-        last_time = int(round(time.time() * 1000))
         # export list to file
         local_catchable = os.path.join(_base_dir, 'web', 'local-catchable-{}.json'.format(self.bot.config.username))
         with open(local_catchable, 'w') as outfile:
     	    json.dump(self.pokemon, outfile)
+    	
+    	self.pokemon = []
         
         # num_pokemon = len(self.pokemon)
         num_pokemon = 0
