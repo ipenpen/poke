@@ -31,7 +31,7 @@ class CatchPokemon(BaseTask):
         # export list to file
         local_catchable = os.path.join(_base_dir, 'web', 'local-catchable-{}.json'.format(self.bot.config.username))
         with open(local_catchable, 'w') as outfile:
-    	    json.dump(self.pokemon, outfile)
+    	    json.dump(pokemon, outfile)
 
         num_pokemon = len(pokemon)
         if num_pokemon > 0:
