@@ -33,7 +33,8 @@ class CatchPokemon(BaseTask):
         with open(local_catchable, 'w') as outfile:
     	    json.dump(pokemon, outfile)
 
-        num_pokemon = len(pokemon)
+        # num_pokemon = len(pokemon)
+        num_pokemon = 0
         if num_pokemon > 0:
             pokemon = self.sort_pokemon(pokemon)
             
